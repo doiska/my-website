@@ -1,0 +1,37 @@
+---
+import BaseHead from "../components/base-head.astro";
+import BaseBody from "../components/base-body.astro";
+
+import Header from "../components/Header.astro";
+import Footer from "../components/newsletter.astro";
+import {
+  SITE_TITLE,
+  SITE_DESCRIPTION
+} from "../consts";
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+</head>
+<BaseBody>
+    <Header />
+    <main class="prose prose-invert font-jetbrains py-4">
+        <h1 class="text-blue-400">I'm doiská!</h1>
+        <span class="font-extrabold">You might be looking for
+            <a
+                    target="_blank"
+                    class="text-blue-400 hover:text-blue-700"
+                    href="https://music.twokei.com"
+            >
+            Twokei - my Music Bot
+        </a>
+        </span>
+        <p>I'm a software developer, freelancer and OSS Contributor.</p>
+        <p>I've been working as a developer for the <strong>past 5 years</strong>, and programming for <strong>almost 10 years.</strong></p>
+        <p>Now I want to share my knowledge and experience with the community, you can join us by subscribing to the newsletter!</p>
+    </main>
+    <Footer />
+</BaseBody>
+</html>

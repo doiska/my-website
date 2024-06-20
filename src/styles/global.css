@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scrollbar-gutter: stable;
+}
+
+@layer base {
+    :root {
+        --background: #fff;
+        --foreground: #0a0a0a;
+    }
+
+    .dark {
+        --background: #0a0a0a;
+        --foreground: #fff;
+    }
+}
+
+.astro-code {
+    @apply font-jetbrains;
+}
+
+pre, code {
+    @apply font-jetbrains;
+}

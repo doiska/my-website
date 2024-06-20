@@ -1,0 +1,64 @@
+---
+import BaseHead from '../components/base-head.astro';
+import BaseBody from '../components/base-body.astro';
+
+import Header from '../components/Header.astro';
+import Footer from '../components/newsletter.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+import { LogSnag } from "@logsnag/astro/server";
+
+if (Astro.request.method === "POST") {
+  const formData = await Astro.request.formData();
+  const email = formData.get("email") as string;
+  const currentUrl = formData.get("currentUrl") as string;
+
+  if (!email) {
+    return;
+  }
+
+  const snag = new LogSnag({
+    token: import.meta.env.LOGSNAG_TOKEN,
+    project: import.meta.env.LOGSNAG_PROJECT
+  });
+
+  try {
+    await snag.track({
+      channel: "newsletter",
+      event: `New Subscriber`,
+      description: `${email} has subscribed to the newsletter`,
+      icon: "🌟",
+      notify: true,
+      user_id: email,
+      tags: {
+        email: email.trim(),
+      },
+    });
+
+    return Astro.redirect("?registered=true");
+  } catch (e) {
+    console.error(e);
+    return Astro.redirect("?error=true");
+  }
+}
+---
+
+<!doctype html>
+<html lang="en">
+<head>
+    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+</head>
+<BaseBody>
+    <Header />
+    <main class="prose prose-invert font-jetbrains py-4">
+        <h2 class="text-blue-400">🧑‍🚀 Welcome!</h2>
+        <h3>Latest news, tips and more.</h3>
+        <p>
+            You'll receive a <strong>weekly email</strong> with the latest news, tips and tricks from me. I'll also share some of the
+            projects I've worked on and the things I've learned along the way.
+        </p>
+        <hr />
+        <strong>Thank you for being part of our community!</strong>
+    </main>
+</BaseBody>
+</html>
